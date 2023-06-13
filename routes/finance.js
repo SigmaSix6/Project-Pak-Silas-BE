@@ -41,4 +41,18 @@ router.get("/bank-name", function (req, res, next) {
   });
 });
 
+router.get("/bu-code", function (req, res, next) {
+  con.query("SELECT * FROM bu_code", (err, rows, fields) => {
+    if (err) throw err;
+    res.send(rows);
+  });
+});
+
+router.get("/supplier-data", function (req, res, next) {
+  con.query("SELECT * FROM supplier_data", (err, rows, fields) => {
+    if (err) throw err;
+    res.send(rows);
+  });
+});
+
 module.exports = router;

@@ -6,8 +6,11 @@ const logger = require("morgan");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const financeRouter = require("./routes/finance");
+const cors = require("cors");
 
 const app = express();
+
+app.use(cors());
 
 app.use(logger("dev"));
 app.use(express.json());

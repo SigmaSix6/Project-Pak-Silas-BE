@@ -49,7 +49,21 @@ router.get("/bu-code", function (req, res, next) {
 });
 
 router.get("/supplier-data", function (req, res, next) {
-  con.query("SELECT * FROM supplier_data", (err, rows, fields) => {
+  con.query("SELECT * FROM `supplier_data` ORDER BY `supp_name` ASC", (err, rows, fields) => {
+    if (err) throw err;
+    res.send(rows);
+  });
+});
+
+router.get("/project-number", function (req, res, next) {
+  con.query("SELECT * FROM `project_number` ORDER BY `PN_proj_numb` DESC", (err, rows, fields) => {
+    if (err) throw err;
+    res.send(rows);
+  });
+});
+
+router.get("/element", function (req, res, next) {
+  con.query("SELECT * FROM `element` ORDER BY `Ele_desc` ASC", (err, rows, fields) => {
     if (err) throw err;
     res.send(rows);
   });

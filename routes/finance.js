@@ -69,4 +69,15 @@ router.get("/element", function (req, res, next) {
   });
 });
 
+router.post("/insert-payment-req", function (req, res, next) {
+  // console.log(req.body);
+  console.log(typeof req.body.request_date);
+  const query = "INSERT INTO payment_requisition (name, address) VALUES ('Michelle', 'Blue Village 1')";
+  // console.log(res);
+  // con.query("SELECT * FROM `element` ORDER BY `Ele_desc` ASC", (err, rows, fields) => {
+  //   if (err) throw err;
+  //   res.send(rows);
+  // });
+});
+
 module.exports = router;

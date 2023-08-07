@@ -96,14 +96,31 @@ router.post("/insert-payment-req", async (req, res, next) => {
       }
     }
   );
-  // .then(
-  //   async (success) => {
-  //     await con.execute(
-  //       `INSERT INTO 'payment_requisition_detail' ('id', 'pr_req_desc', 'pr_amt_idr', 'pr_amt_usd', 'pr_tax', 'pr_tax_usd', 'pr_tax_idr', 'pr_amt_curr', 'pr_type_curr', 'pr_amt_tot_idr') VALUES ('${res1.insertId}', 'ASD', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)`
-  //     );
-  //   },
-  //   async (reject) => {}
-  // );
+});
+
+router.post("/insert-cash-adv", async (req, res, next) => {
+  const data = req.body;
+  // data.request_date = convertDateToSql(data.request_date);
+  await con.execute(
+    `INSERT INTO cash_advance(CA_ID_Numb, CA_supp_name, CA_supp_numb, CA_dept_numb, CA_proj_numb, CA_req_date, CA_type_pay, CA_mode_pay, CA_req_desc, CA_effec_date, CA_cheque_no, CA_amt_usd, CA_amt_idr, CA_amt_say, CA_finance_prog_date, CA_finance_notice, CA_alloc_dept, CA_element, CA_balance_amt, CA_balance_amt_curr, CA_return_to_cash, CA_return_to_cash_curr, CA_date_in_site, CA_date_out_site, CA_total_empl_on_duty, CA_P_amt_ticket, CA_P_amt_airport_tax, CA_P_amt_taxi, CA_P_amt_meal, CA_P_amt_accom, CA_P_amt_park_toll, CA_P_amt_doc, CA_P_amt_fee_comn, CA_P_amt_purch_mat, CA_P_amt_sent_mat, CA_P_amt_rental_car, CA_P_amt_fuel, CA_P_amt_telp_voucher, CA_P_amt_other1, CA_P_amt_other2, CA_P_amt_other3, CA_P_amt_other4, CA_P_amt_other5, CA_amt_ticket, CA_amt_airport_tax, CA_amt_taxi, CA_amt_meal, CA_amt_accom, CA_amt_park_toll, CA_amt_doc, CA_amt_fee_comn, CA_amt_purch_mat, CA_amt_sent_mat, CA_amt_rental_car, CA_amt_fuel, CA_amt_telp_voucher, CA_amt_other1, CA_amt_other2, CA_amt_other3, CA_amt_other4, CA_amt_other5, CA_no_amt_ticket, CA_no_amt_airport_tax, CA_no_amt_taxi, CA_no_amt_meal, CA_no_amt_accom, CA_no_amt_park_toll, CA_no_amt_doc, CA_no_amt_fee_comn, CA_no_amt_purch_mat, CA_no_amt_sent_mat, CA_no_amt_rental_car, CA_no_amt_fuel, CA_no_amt_telp_voucher, CA_no_amt_other1, CA_no_amt_other2, CA_no_amt_other3, CA_no_amt_other4, CA_no_amt_other5, P_currency, P_Curr_accom, P_Curr_ticket, P_Curr_meal, P_Curr_enter, P_Curr_taxi, P_Curr_other, A_Curr_accom, A_Curr_ticket, A_Curr_meal, A_Curr_enter, A_Curr_taxi, A_Curr_other, CA_status, Curr_amt, Comp_code_ca) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]','[value-10]','[value-11]','[value-12]','[value-13]','[value-14]','[value-15]','[value-16]','[value-17]','[value-18]','[value-19]','[value-20]','[value-21]','[value-22]','[value-23]','[value-24]','[value-25]','[value-26]','[value-27]','[value-28]','[value-29]','[value-30]','[value-31]','[value-32]','[value-33]','[value-34]','[value-35]','[value-36]','[value-37]','[value-38]','[value-39]','[value-40]','[value-41]','[value-42]','[value-43]','[value-44]','[value-45]','[value-46]','[value-47]','[value-48]','[value-49]','[value-50]','[value-51]','[value-52]','[value-53]','[value-54]','[value-55]','[value-56]','[value-57]','[value-58]','[value-59]','[value-60]','[value-61]','[value-62]','[value-63]','[value-64]','[value-65]','[value-66]','[value-67]','[value-68]','[value-69]','[value-70]','[value-71]','[value-72]','[value-73]','[value-74]','[value-75]','[value-76]','[value-77]','[value-78]','[value-79]','[value-80]','[value-81]','[value-82]','[value-83]','[value-84]','[value-85]','[value-86]','[value-87]','[value-88]','[value-89]','[value-90]','[value-91]','[value-92]','[value-93]','[value-94]','[value-95]')`,
+    (err, rows, fields) => {
+      if (err) throw err;
+      // console.log("Success");
+      for (let i = 1; i <= data.detailLength; i++) {
+        con.execute(
+          `INSERT INTO payment_requisition_detail (id, pr_req_desc, pr_amt_idr, pr_amt_usd, pr_tax, pr_tax_usd, pr_tax_idr, pr_amt_curr, pr_type_curr, pr_amt_tot_idr) VALUES ('${
+            rows.insertId
+          }', '${data[`purpose_req_${i}`] ?? ``}', '${data[`amount_${i}`] ?? ``}', '${data[`curr_${i}`] ?? ``}', '${data[`tax_${i}`] ?? ``}', '${
+            rows.insertId
+          }', '${rows.insertId}', '${rows.insertId}', '${rows.insertId}', '${rows.insertId}') `,
+          (err, rows, fields) => {
+            if (err) throw err;
+            console.log(rows);
+          }
+        );
+      }
+    }
+  );
 });
 
 module.exports = router;

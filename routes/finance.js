@@ -10,13 +10,6 @@ router.get("/", function (req, res, next) {
   res.status(200).send("API Conenction Works!");
 });
 
-router.get("/bank", function (req, res, next) {
-  con.execute("SELECT * FROM bank_code", (err, rows, fields) => {
-    if (err) throw err;
-    res.send(rows);
-  });
-});
-
 router.get("/employee", function (req, res, next) {
   con.execute("SELECT * FROM manpower_data", (err, rows, fields) => {
     if (err) throw err;
@@ -39,8 +32,9 @@ router.get("/bank-code", function (req, res, next) {
 });
 
 router.get("/bank-name", function (req, res, next) {
-  con.execute("SELECT * FROM bank_name", (err, rows, fields) => {
+  con.execute("SELECT * FROM bank_name ORDER BY `bank_name` ASC", (err, rows, fields) => {
     if (err) throw err;
+    console.log(rows);
     res.send(rows);
   });
 });

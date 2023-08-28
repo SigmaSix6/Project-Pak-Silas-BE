@@ -121,7 +121,7 @@ router.post("/insert-bank-activity", async (req, res, next) => {
   const data = req.body;
   // data.request_date = convertDateToSql(data.request_date);
   await con.execute(
-    `INSERT INTO bank_activity (bank_name, date_transaction, bank_remark, bank_code, bank_curr, bank_deposit_idr, bank_withdrawal_idr, bank_deposit_usd, bank_withdrawal_usd, cheque, finance_description, comp_code_ba, bank_deposit_eur, bank_withdrawal_eur) VALUES ( NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)`,
+    `INSERT INTO bank_activity (bank_name, date_transaction, bank_remark, bank_code, bank_curr, bank_deposit_idr, bank_withdrawal_idr, bank_deposit_usd, bank_withdrawal_usd, cheque, finance_description, comp_code_ba, bank_deposit_eur, bank_withdrawal_eur) VALUES ( ${data.bank_name}, ${data.transaction_date}, ${data.remarks}, NULL, ${data.transaction_code}, ${data.currency_type}, ${data.deposit_idr}, ${data.withdrawal_idr}, ${data.deposit_usd}, ${data.withdrawal_usd}, NULL, ${data.finance_description}, NULL, NULL)`,
     (err, rows, fields) => {
       if (err) throw err;
       // console.log("Success");

@@ -124,20 +124,19 @@ router.post("/insert-bank-activity", async (req, res, next) => {
     `INSERT INTO bank_activity (bank_name, date_transaction, bank_remark, bank_code, bank_curr, bank_deposit_idr, bank_withdrawal_idr, bank_deposit_usd, bank_withdrawal_usd, cheque, finance_description, comp_code_ba, bank_deposit_eur, bank_withdrawal_eur) VALUES ( ${data.bank_name}, ${data.transaction_date}, ${data.remarks}, NULL, ${data.transaction_code}, ${data.currency_type}, ${data.deposit_idr}, ${data.withdrawal_idr}, ${data.deposit_usd}, ${data.withdrawal_usd}, NULL, ${data.finance_description}, NULL, NULL)`,
     (err, rows, fields) => {
       if (err) throw err;
-      // console.log("Success");
-      // for (let i = 1; i <= data.detailLength; i++) {
-      //   con.execute(
-      //     `INSERT INTO payment_requisition_detail (id, pr_req_desc, pr_amt_idr, pr_amt_usd, pr_tax, pr_tax_usd, pr_tax_idr, pr_amt_curr, pr_type_curr, pr_amt_tot_idr) VALUES ('${
-      //       rows.insertId
-      //     }', '${data[`purpose_req_${i}`] ?? ``}', '${data[`amount_${i}`] ?? ``}', '${data[`curr_${i}`] ?? ``}', '${data[`tax_${i}`] ?? ``}', '${
-      //       rows.insertId
-      //     }', '${rows.insertId}', '${rows.insertId}', '${rows.insertId}', '${rows.insertId}') `,
-      //     (err, rows, fields) => {
-      //       if (err) throw err;
-      //       console.log(rows);
-      //     }
-      //   );
-      // }
+      console.log(rows);
+    }
+  );
+});
+
+router.post("/insert-supplier", async (req, res, next) => {
+  const data = req.body;
+  // data.request_date = convertDateToSql(data.request_date);
+  await con.execute(
+    `INSERT INTO supplier_data (supp_name, supp_number, supp_address, supp_contact_name, supp_phone_numb) VALUES ( ${data.supplier_name}, ${data.supplier_number}, ${data.address}, ${data.contact_name}, ${data.phone_number})`,
+    (err, rows, fields) => {
+      if (err) throw err;
+      console.log(rows);
     }
   );
 });

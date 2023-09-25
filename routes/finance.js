@@ -141,4 +141,16 @@ router.post("/insert-supplier", async (req, res, next) => {
   );
 });
 
+router.post("/insert-payment-order", async (req, res, next) => {
+  const data = req.body;
+  // data.request_date = convertDateToSql(data.request_date);
+  await con.execute(
+    `INSERT INTO payment_po (PO_numb, PO_PO_Numb, PO_supp_name, PO_supp_numb, PO_proj_numb, PO_dept_numb, PO_req_date, PO_type_pay, PO_mode_pay, PO_type, PO_req_desc, PO_supp_inv_numb, PO_inv_rec_date, PO_amt_usd, PO_amt_idr, PO_amt_curr_t, PO_tax_y_n, PO_tax_usd, PO_tax_idr, PO_finc_effec_date, PO_finc_issue, PO_finc_amt_tsf_fee, PO_finc_amt_oth_fee, PO_amt_tot_usd, PO_amt_curr, PO_amt_tot_idr, PO_amt_all_tot_idr, PO_finc_bank_doc, PO_finc_bank_n_b, PO_finc_bank_n_g, PO_amt_all_tot_idr2, Comp_code_po) VALUES ('',${data.po_number},${data.supplier_name},${data.supplier_number},${data.project_number},${data.department_number},${data.request_date},${data.type_payment},${data.mode_payment},${data.po_type},${data.po_description},${data.supplier_inv_number},${data.inv_date_received},${data.po_amount_currency},${data.po_amount_idr},'[value-16]','[value-17]','[value-18]','[value-19]','[value-20]','[value-21]','[value-22]','[value-23]','[value-24]','[value-25]','[value-26]','[value-27]','[value-28]','[value-29]','[value-30]','[value-31]','[value-32]')`,
+    (err, rows, fields) => {
+      if (err) throw err;
+      console.log(rows);
+    }
+  );
+});
+
 module.exports = router;

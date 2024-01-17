@@ -6,6 +6,7 @@ const logger = require("morgan");
 // const indexRouter = require("./routes/index");
 // const usersRouter = require("./routes/users");
 const financeRouter = require("./routes/finance");
+const financeReportRouter = require("./routes/report/financeReport");
 const cors = require("cors");
 
 const app = express();
@@ -19,6 +20,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/finance", financeRouter);
+app.use("/finance/report", financeReportRouter);
 
 app.get("/*", function (req, res) {
   res.sendFile(path.join(__dirname, "public", "index.html"));
